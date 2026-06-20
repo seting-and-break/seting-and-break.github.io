@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Acker</title>
+    <link>http://example.com/</link>
+    
+    <atom:link href="http://example.com/rss2.xml" rel="self" type="application/rss+xml"/>
+    
+    <description>从 Hello,world 到 Hello,Root ----这是我们的征途</description>
+    <pubDate>Tue, 14 Oct 2025 14:18:15 GMT</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>Road1</title>
+      <link>http://example.com/2025/10/14/Road1/</link>
+      <guid>http://example.com/2025/10/14/Road1/</guid>
+      <pubDate>Tue, 14 Oct 2025 10:40:37 GMT</pubDate>
+      
+        
+        
+      <description>&lt;h1 id=&quot;pwn&quot;&gt;&lt;a href=&quot;#pwn&quot; class=&quot;headerlink&quot; title=&quot;pwn&quot;&gt;&lt;/a&gt;pwn&lt;/h1&gt;&lt;h4 id=&quot;什么是pwn？&quot;&gt;&lt;a href=&quot;#什么是pwn？&quot; class=&quot;headerlink&quot; title=&quot;什么是pwn？</description>
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h4 id="什么是pwn？"><a href="#什么是pwn？" class="headerlink" title="什么是pwn？"></a>什么是pwn？</h4><p>黑客俗语：攻击成功，破解成功，致力于二进制漏洞利用与挖掘，也就是已经编译成机器码的二进制程序。</p><p><img src="/images/image-20251013142537176.png" alt="image-20251013142537176">elf文件，可以由，头（elf文件头（必须在文件头部），程序头&#x2F;段表），节（代码（可执行的机器码），数据（执行机器码可能使用到数据），其他节），头（节头表)</p><p>ELF文件头表：记录ELF文件的组织结构<br>程序头表&#x2F;段表：告诉系统如何创建进程，生成进程的可执行程序必须有这个结构，重定位文件不一定需要<br>节头表：记录elf文件的节区信息，用于链接的目标必须拥有此结构，其他类型文件不一定需要</p><h4 id="磁盘中的ELF（可执行文件）与内存中的ELF（进程内存映像）"><a href="#磁盘中的ELF（可执行文件）与内存中的ELF（进程内存映像）" class="headerlink" title="磁盘中的ELF（可执行文件）与内存中的ELF（进程内存映像）"></a>磁盘中的ELF（可执行文件）与内存中的ELF（进程内存映像）</h4><p><img src="/images/image-20251013144442066.png" alt="image-20251013144442066"></p><p>当运行磁盘中的elf文件，将磁盘中的elf文件加载到内存映像中，在磁盘中都是节，只有被加载到内存中才自成段</p><p><img src="/images/image-20251013144716611.png" alt="image-20251013144716611"></p><p>虚拟内存用户空间每个进程一份<br>虚拟内存内核空间所有进程共享一份<br>虚拟内存mmap段中的动态链接库仅在物理内存中装载一份。</p><p><img src="/images/image-20251013150806456.png" alt="image-20251013150806456"></p><p>windows编程中，给用户2g的内存空间用户空间（用户所写的代码和数据，控制用户程序所执行的相关控制结构：eg：栈），2g的内核内存空间（内核操作系统代码，因为在保护模式下，操作系统要代替用户管理硬件，因此大部分代码都用来进行硬件管理，和用户内存的分配与调度）</p><h4 id="64位内存虚拟空间"><a href="#64位内存虚拟空间" class="headerlink" title="64位内存虚拟空间"></a>64位内存虚拟空间</h4><p>动态存储区：并不会写死在硬盘上的elf文件，是载入内存后，动态申请的数据</p><p>静态存储区：写死在硬盘上的elf</p><p>stack：用来保存函数的执行状态，进行函数调用控制流控制的。因此也存放局部变量，方便与局部变量所在函数执行完一起释放</p><p>heap：提供给用户进行动态内存分配的。</p><p><img src="/images/image-20251013151652733.png" alt="image-20251013151652733"></p><h4 id="段与节"><a href="#段与节" class="headerlink" title="段与节"></a>段与节</h4><p>段视图用来标识文件如何在内存中执行<br>节视图用来标识文件如何在磁盘中如何生成和存储</p><p><img src="/images/image-20251013185133178.png" alt="image-20251013185133178"></p><p>.text节：用来存放代码，实现用户想要执行的功能。<br>.rodata:用来存放程序运行期间不会修改的数据，一般指常量，字符串，和只读的全局变量<br>.plt节：解析动态链接函数的实际地址<br>.data节：存放已经初始化的全局变量<br>.got.plt:用来保存plt节解析到的动态链接函数地址。<br>.bss节：不占用磁盘空间，只占用内存空间，存放未初始化的全局变量</p><h4 id="程序中的函数和变量统称为符号表，形参的存放与架构有关："><a href="#程序中的函数和变量统称为符号表，形参的存放与架构有关：" class="headerlink" title="程序中的函数和变量统称为符号表，形参的存放与架构有关："></a>程序中的函数和变量统称为符号表，形参的存放与架构有关：</h4><p>32位的时候，形参存放在栈中，在创建形参所属函数栈帧之前，先将形参压栈。<br>64位的时候，形参存放在寄存器中。</p><h4 id="数据的存放："><a href="#数据的存放：" class="headerlink" title="数据的存放："></a>数据的存放：</h4><p>大端序：低地址存放数据的高位，高地址存放地址的低位<br>eg:0x1234<br>内存存放：12 34<br>小端序：低地址存放数据的地位，高地址存放地址的高位<br>eg:0x1234<br>内存存放：34 12</p><p>leave：在函数返回时，回复父函数栈帧的指令<br>等效于：<br>mov esp,ebp<br>pop ebp</p><p>ret：在函数返回时，控制程序执行流返回到父函数的指令<br>等效于：<br>pop rip</p><p>一些突发问题和心得：</p><h3 id="1-如果数据是按照小端序存储，但是发送payload的时候为什么可以按照程序写的顺序执行。"><a href="#1-如果数据是按照小端序存储，但是发送payload的时候为什么可以按照程序写的顺序执行。" class="headerlink" title="1.如果数据是按照小端序存储，但是发送payload的时候为什么可以按照程序写的顺序执行。"></a><strong>1.如果数据是按照小端序存储，但是发送payload的时候为什么可以按照程序写的顺序执行。</strong></h3><p>答案：「小端序的影响范围」—— 它只影响单个多字节数据内部的字节顺序，而不会改变不同数据块之间的整体顺序。<br>eg：b’a’*8(buf)+b’a’*4(rbp)+p32(0x1234)(system覆盖地址)<br>将这块数据发送的时候，会先发送b’a’*8然后将这块数据小端序存储在buf变量中，在发送b’a’*4同理覆盖rbp，最后发送system覆盖地址</p><h3 id="2-为什么说32位内存空间是4g，每个程序在执行的时候虚拟内存空间都是4g？"><a href="#2-为什么说32位内存空间是4g，每个程序在执行的时候虚拟内存空间都是4g？" class="headerlink" title="2.为什么说32位内存空间是4g，每个程序在执行的时候虚拟内存空间都是4g？"></a><strong>2.为什么说32位内存空间是4g，每个程序在执行的时候虚拟内存空间都是4g？</strong></h3><p>虚拟内存（Virtual Memory） 技术 —— 它不是真实的物理内存，而是操作系统给每个程序 “画的一块独立的、连续的内存空间”，核心目标是 隔离程序、简化内存管理、充分利用物理内存。<br> 虚拟内存的核心逻辑：“每个程序都以为自己独占内存”，连续的虚拟地址，会被操作系统通过 页表（Page Table） 映射到物理内存中不连续的 “内存页” 上。**</p><h3 id="3-既然是映射在不同的内存页上，那为什么还会顺序执行？"><a href="#3-既然是映射在不同的内存页上，那为什么还会顺序执行？" class="headerlink" title="3.既然是映射在不同的内存页上，那为什么还会顺序执行？"></a>3.既然是映射在不同的内存页上，那为什么还会顺序执行？</h3><p>程序的执行顺序由「虚拟内存地址的逻辑顺序」决定，CPU 通过页表将虚拟地址翻译成物理地址后，才能读取到对应地址的指令并执行。</p>]]></content:encoded>
+      
+      
+      <category domain="http://example.com/categories/%E6%98%9F%E7%9B%9F%E5%9F%B9%E8%AE%AD/">星盟培训</category>
+      
+      
+      <category domain="http://example.com/tags/%E5%BC%80%E5%A7%8B/">开始</category>
+      
+      
+      <comments>http://example.com/2025/10/14/Road1/#disqus_thread</comments>
+      
+    </item>
+    
+  </channel>
+</rss>
