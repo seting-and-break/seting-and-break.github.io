@@ -39,7 +39,7 @@
       </description>
       <author>Acker</author>
       <category domain="https://acker.top/categories/%E6%98%9F%E7%9B%9F%E5%9F%B9%E8%AE%AD/">星盟培训</category>
-      <category domain="https://acker.top/tags/%E5%BC%80%E5%A7%8B/">开始</category>
+      <category domain="https://acker.top/tags/%EF%BF%BD%EF%BF%BD%CA%BC/">��ʼ</category>
       <pubDate>Tue, 14 Oct 2025 10:40:37 GMT</pubDate>
       <content:encoded>
         <![CDATA[<p>pwn</p><p>什么是pwn？</p><p>黑客俗语：攻击成功，破解成功，致力于二进制漏洞利用与挖掘，也就是已经编译成机器码的二进制程序。</p><h2 id="ELF-文件结构"><a href="#ELF-文件结构" class="headerlink" title="ELF 文件结构"></a>ELF 文件结构</h2><p>elf文件，可以由以下部分组成：</p><ul><li><strong>头</strong>：elf文件头（必须在文件头部），程序头&#x2F;段表</li><li><strong>节</strong>：代码（可执行的机器码），数据（执行机器码可能使用到数据），其他节</li><li><strong>头</strong>：节头表</li></ul><h3 id="ELF文件头表"><a href="#ELF文件头表" class="headerlink" title="ELF文件头表"></a>ELF文件头表</h3><p>记录ELF文件的组织结构</p><h3 id="程序头表-段表"><a href="#程序头表-段表" class="headerlink" title="程序头表&#x2F;段表"></a>程序头表&#x2F;段表</h3><p>告诉系统如何创建进程，生成进程的可执行程序必须有这个结构，重定位文件不一定需要</p><h3 id="节头表"><a href="#节头表" class="headerlink" title="节头表"></a>节头表</h3><p>记录elf文件的节区信息，用于链接的目标必须拥有此结构，其他类型文件不一定需要</p><h2 id="磁盘中的ELF与内存中的ELF"><a href="#磁盘中的ELF与内存中的ELF" class="headerlink" title="磁盘中的ELF与内存中的ELF"></a>磁盘中的ELF与内存中的ELF</h2><p>当运行磁盘中的elf文件，将磁盘中的elf文件加载到内存映像中。在磁盘中都是节，只有被加载到内存中才自成段。</p><h2 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h2><ul><li>用户空间：每个进程一份虚拟内存</li><li>内核空间：所有进程共享一份虚拟内存</li><li>mmap段中的动态链接库仅在物理内存中装载一份</li></ul><blockquote><p>Windows编程中，给用户2g的内存空间。用户空间（用户所写的代码和数据，控制用户程序所执行的相关控制结构：eg：栈），2g的内核内存空间（内核操作系统代码，因为在保护模式下，操作系统要…）</p></blockquote><hr><p><em>从 Hello,world 到 Hello,Root — 这是我们的征途</em></p>]]>
